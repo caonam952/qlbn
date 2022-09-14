@@ -44,9 +44,9 @@ public class EmployeeController {
     @PutMapping("/{employeeId}")
     public ResponseEntity<?> updateEmployee(EmployeeDto employeeDto, @PathVariable int employeeId) {
         Optional<EmployeeDto> employeeDtoOptional = employeeService.findById(employeeId);
-        return employeeDtoOptional.map(buildingEmployeeDTO -> {
+        return employeeDtoOptional.map(employeeDTO -> {
             employeeService.save(employeeDto);
-            return new ResponseEntity<>(buildingEmployeeDTO, HttpStatus.OK);
+            return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -54,9 +54,9 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDto> deleteEmployee(@PathVariable int employeeId) {
         // Lấy thử đối tượng có id đó ra xem tồn tại chưa để xóa, ko thì trả về status not found
         Optional<EmployeeDto> employeeDtoOptional = employeeService.findById(employeeId);
-        return employeeDtoOptional.map(buildingEmployeeDTO -> {
+        return employeeDtoOptional.map(employeeDTO -> {
             employeeService.deleteById(employeeId);
-            return new ResponseEntity<>(buildingEmployeeDTO, HttpStatus.OK);
+            return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

@@ -7,10 +7,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @NoArgsConstructor
@@ -35,6 +32,7 @@ public class PatientDto {
     private String address;
 
     @NotEmpty(message = "không để trống")
+    @Digits(integer = 10, fraction = 0)
     private String phone;
 
     @Email(message = "nhập đúng định dạng email")
