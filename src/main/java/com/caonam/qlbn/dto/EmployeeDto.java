@@ -1,12 +1,13 @@
 package com.caonam.qlbn.dto;
 
-import com.caonam.qlbn.entities.Prescription;
+import com.caonam.qlbn.entities.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,10 +16,19 @@ import javax.validation.constraints.NotBlank;
 public class EmployeeDto {
     private int id;
 
-    @NotBlank(message = "không để trống")
+    @NotEmpty(message = "không để trống")
     private String name;
 
-    @NotBlank(message = "không để trống")
+    @NotEmpty(message = "không để trống")
     private String position;
+
     private PrescriptionDto prescriptionDto;
+
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    public static EmployeeDto toDto(Employee employee) {
+        EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
+        dto.setPrescriptionDto(modelMapper.map(employee.getPrescription(), PrescriptionDto.class));
+        return dto;
+    }
 }

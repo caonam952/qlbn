@@ -21,7 +21,7 @@ public class Medicine {
     private int id;
 
     @Column(name = "name")
-    private int name;
+    private String name;
 
     @Column(name = "origin")
     private String origin;

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,18 +14,18 @@ import javax.validation.constraints.NotBlank;
 public class RecordDto {
     private int id;
 
-    @NotBlank(message = "không để trống")
+    @NotEmpty(message = "không để trống")
     private String medicalHistory;
 
     private String productInUse;
 
-    @NotBlank(message = "không để trống")
+    @NotEmpty(message = "không để trống")
     private String diagnose;
 
-    @NotBlank(message = "không để trống")
+    @NotEmpty(message = "không để trống")
     private String result;
 
-    @NotBlank(message = "không để trống")
+    @NotEmpty(message = "không để trống")
     private String regimen;
 
     private String preImage;

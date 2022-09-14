@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Future;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,10 +17,10 @@ import java.util.List;
 public class PrescriptionDto {
     private int id;
 
-    @NotBlank(message = "không để trống")
+    @NotEmpty(message = "không để trống")
     private LocalDate prescriptionDate;
 
-    @NotBlank(message = "không để trống")
+    @NotEmpty(message = "không để trống")
     @Future
     private LocalDate appointmentDate;
 
