@@ -49,7 +49,7 @@ public class PatientControler {
     public ResponseEntity<?> updatePatient(@RequestBody @Valid PatientDto patientDto, @PathVariable UUID patientId) {
         Optional<PatientDto> patientDtoOptional = patientService.findById(patientId);
         return patientDtoOptional.map(patientDTO -> {
-            patientService.save(patientDto);
+            patientService.update(patientDto, patientId);
             return new ResponseEntity<>(patientDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

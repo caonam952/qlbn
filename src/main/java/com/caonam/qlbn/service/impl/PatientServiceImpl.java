@@ -46,6 +46,21 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void save(PatientDto patientDto) {
         Patient patient = new Patient();
+        setPatient(patientDto, patient);
+        modelMapper.map(patientRepository.save(patient), PatientDto.class);
+
+    }
+
+    @Override
+    public void update(PatientDto patientDto, UUID id) {
+        Patient patient = patientRepository.findById(id).orElse(null);
+        setPatient(patientDto, patient);
+        modelMapper.map(patientRepository.save(patient), PatientDto.class);
+
+
+    }
+
+    private void setPatient(PatientDto patientDto, Patient patient) {
         patient.setName(patientDto.getName());
         patient.setBirth(patientDto.getBirth());
         patient.setSex(patientDto.getSex());
@@ -53,7 +68,6 @@ public class PatientServiceImpl implements PatientService {
         patient.setPhone(patientDto.getPhone());
         patient.setEmail(patientDto.getEmail());
         patient.setNote(patientDto.getNote());
-        modelMapper.map(patientRepository.save(patient), PatientDto.class);
     }
 
 

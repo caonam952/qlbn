@@ -46,6 +46,19 @@ public class MedicineServiceImpl implements MedicineService {
     @Override
     public void save(MedicineDto medicineDto) {
         Medicine medicine = new Medicine();
+        setMedicine(medicineDto, medicine);
+        modelMapper.map(medicineRepository.save(medicine), MedicineDto.class);
+    }
+
+    @Override
+    public void update(MedicineDto medicineDto, UUID id) {
+        Medicine medicine = medicineRepository.findById(id).orElse(null);
+        setMedicine(medicineDto, medicine);
+        modelMapper.map(medicineRepository.save(medicine), MedicineDto.class);
+
+    }
+
+    private void setMedicine(MedicineDto medicineDto, Medicine medicine) {
         medicine.setName(medicineDto.getName());
         medicine.setOrigin(medicineDto.getOrigin());
         medicine.setUni(medicineDto.getUni());
@@ -55,9 +68,9 @@ public class MedicineServiceImpl implements MedicineService {
         medicine.setPrice(medicineDto.getPrice());
         medicine.setManual(medicineDto.getManual());
         medicine.setNote(medicineDto.getNote());
-        modelMapper.map(medicineRepository.save(medicine), MedicineDto.class);
     }
-    
+
+
     @Override
     public void deleteById(UUID id) {
         medicineRepository.deleteById(id);

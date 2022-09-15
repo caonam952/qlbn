@@ -48,7 +48,7 @@ public class MedicineController {
     public ResponseEntity<?> updateMedicine(@RequestBody @Valid MedicineDto medicineDto, @PathVariable UUID medicineId) {
         Optional<MedicineDto> medicineDtoOptional = medicineService.findById(medicineId);
         return medicineDtoOptional.map(medicineDTO -> {
-            medicineService.save(medicineDto);
+            medicineService.update(medicineDto, medicineId);
             return new ResponseEntity<>(medicineDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

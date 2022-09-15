@@ -71,7 +71,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPosition(employeeDto.getPosition());
 //        employee.setPrescription(modelMapper.map(employeeDto.getPrescriptionDto(), Prescription.class));
         modelMapper.map(employeeRepository.save(employee), EmployeeDto.class);
-
-
     }
 }

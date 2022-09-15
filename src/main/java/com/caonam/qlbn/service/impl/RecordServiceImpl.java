@@ -46,6 +46,19 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public void save(RecordDto recordDto) {
         Record record = new Record();
+        setRecord(recordDto,record);
+        modelMapper.map(recordRepository.save(record), RecordDto.class);
+    }
+
+    @Override
+    public void update(RecordDto recordDto, UUID id) {
+        Record record = recordRepository.findById(id).orElse(null);
+        setRecord(recordDto, record);
+        modelMapper.map(recordRepository.save(record), RecordDto.class);
+    }
+
+
+    private void setRecord(RecordDto recordDto, Record record) {
         record.setMedicalHistory(recordDto.getMedicalHistory());
         record.setProductInUse(record.getProductInUse());
         record.setDiagnose(recordDto.getDiagnose());
@@ -54,7 +67,6 @@ public class RecordServiceImpl implements RecordService {
         record.setPreImage(recordDto.getPreImage());
         record.setAfterImage(record.getAfterImage());
         record.setPatient(modelMapper.map(recordDto.getPatientDto(), Patient.class));
-        modelMapper.map(recordRepository.save(record), RecordDto.class);
     }
 
     @Override
