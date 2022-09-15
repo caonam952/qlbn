@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface MedicineService extends GeneralService<MedicineDto> {
-    List<MedicineDto> findAll();
+//    List<MedicineDto> findAll();
 
-    void deleteById(int id);
+//    void deleteById(int id);
 }

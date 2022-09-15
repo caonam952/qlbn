@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 //bệnh án
 @Entity
@@ -16,9 +18,9 @@ import javax.persistence.*;
 @Getter
 public class Record {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    @Type(type = "uuid-char")
+    private UUID id = UUID.randomUUID();
 
 //    //tiền sử bệnh
 //    @Column(name = "heath_history")
@@ -55,8 +57,4 @@ public class Record {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-//    @OneToOne(mappedBy = "record",
-//            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinColumn(name = "employee_id")
-//    private Employee employee;
 }

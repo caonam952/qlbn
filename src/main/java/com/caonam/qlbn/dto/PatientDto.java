@@ -9,13 +9,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class PatientDto {
-    private int uuid;
+    private UUID id;
 
     @NotEmpty(message = "không để trống")
     private String name;

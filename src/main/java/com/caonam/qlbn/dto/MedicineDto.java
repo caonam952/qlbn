@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 @Getter
 public class MedicineDto {
 
-    private int id;
+    private UUID id;
 
     @NotEmpty(message = "không để trống")
     private String name;
@@ -47,4 +48,5 @@ public class MedicineDto {
 
     private String note;
 
+    private PrescriptionDto prescriptionDto;
 }

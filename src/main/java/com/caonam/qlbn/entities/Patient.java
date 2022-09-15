@@ -3,9 +3,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,9 +18,9 @@ import java.util.UUID;
 @Getter
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    @Type(type = "uuid-char")
+    private UUID id = UUID.randomUUID();
 
     @Column(name = "name")
     private String name;
@@ -45,9 +47,10 @@ public class Patient {
     @JoinColumn(name = "record_id")
     private Record record;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient",
+            cascade = CascadeType.ALL)
     @JoinColumn(name = "prescription_id")
-    private Prescription prescription;
+    private List<Prescription> prescriptions;
 
 
 }

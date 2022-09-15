@@ -1,18 +1,19 @@
 package com.caonam.qlbn.service.impl;
 
 import com.caonam.qlbn.dao.MedicineRepository;
-import com.caonam.qlbn.dto.EmployeeDto;
 import com.caonam.qlbn.dto.MedicineDto;
-import com.caonam.qlbn.entities.Employee;
 import com.caonam.qlbn.entities.Medicine;
 import com.caonam.qlbn.service.MedicineService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 public class MedicineServiceImpl implements MedicineService {
 
     @Autowired
@@ -34,7 +35,7 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public Optional<MedicineDto> findById(Integer id) {
+    public Optional<MedicineDto> findById(UUID id) {
         Optional<Medicine> result = medicineRepository.findById(id);
 
         Optional<MedicineDto> tempMedicineDto = result.map(result1 -> modelMapper.map(result1, MedicineDto.class));
@@ -43,7 +44,7 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public MedicineDto save(MedicineDto medicineDto) {
+    public void save(MedicineDto medicineDto) {
         Medicine medicine = new Medicine();
         medicine.setName(medicineDto.getName());
         medicine.setOrigin(medicineDto.getOrigin());
@@ -54,11 +55,11 @@ public class MedicineServiceImpl implements MedicineService {
         medicine.setPrice(medicineDto.getPrice());
         medicine.setManual(medicineDto.getManual());
         medicine.setNote(medicineDto.getNote());
-        return modelMapper.map(medicineRepository.save(medicine), MedicineDto.class);
+        modelMapper.map(medicineRepository.save(medicine), MedicineDto.class);
     }
     
     @Override
-    public void deleteById(int id) {
+    public void deleteById(UUID id) {
         medicineRepository.deleteById(id);
     }
 }

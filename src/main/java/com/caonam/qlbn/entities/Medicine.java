@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "medicine")
@@ -16,9 +18,10 @@ import java.time.LocalDate;
 @Getter
 public class Medicine {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    @Type(type = "uuid-char")
+    private UUID id = UUID.randomUUID();
+
 
     @Column(name = "name")
     private String name;

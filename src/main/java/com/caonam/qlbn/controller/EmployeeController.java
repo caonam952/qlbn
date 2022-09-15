@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/employees")
+@RequestMapping("/api")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -21,28 +23,28 @@ public class EmployeeController {
         employeeService = theEmployeeService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/employees/list")
     public ResponseEntity<List<EmployeeDto>> findAllEmployee() {
         return new ResponseEntity<>(employeeService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{employeeId}")
-    public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable int employeeId) {
+    @GetMapping("/employees/{employeeId}")
+    public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable UUID employeeId) {
         Optional<EmployeeDto> employeeDtoOptional = employeeService.findById(employeeId);
         return employeeDtoOptional.map(employeeDto -> {
             return new ResponseEntity<>(employeeDto, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
-    public ResponseEntity<?> saveEmployee(EmployeeDto employeeDto) {
-        employeeDto.setId(0);
+    @PostMapping("/employees")
+    public ResponseEntity<?> saveEmployee(@RequestBody @Valid EmployeeDto employeeDto) {
+        employeeDto.setId(null);
         employeeService.save(employeeDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/{employeeId}")
-    public ResponseEntity<?> updateEmployee(EmployeeDto employeeDto, @PathVariable int employeeId) {
+    @PutMapping("/employees/{employeeId}")
+    public ResponseEntity<?> updateEmployee(@RequestBody @Valid EmployeeDto employeeDto, @PathVariable UUID employeeId) {
         Optional<EmployeeDto> employeeDtoOptional = employeeService.findById(employeeId);
         return employeeDtoOptional.map(employeeDTO -> {
             employeeService.save(employeeDto);
@@ -50,8 +52,8 @@ public class EmployeeController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/{employeeId}")
-    public ResponseEntity<EmployeeDto> deleteEmployee(@PathVariable int employeeId) {
+    @DeleteMapping("/employees/{employeeId}")
+    public ResponseEntity<EmployeeDto> deleteEmployee(@PathVariable UUID employeeId) {
         // Lấy thử đối tượng có id đó ra xem tồn tại chưa để xóa, ko thì trả về status not found
         Optional<EmployeeDto> employeeDtoOptional = employeeService.findById(employeeId);
         return employeeDtoOptional.map(employeeDTO -> {

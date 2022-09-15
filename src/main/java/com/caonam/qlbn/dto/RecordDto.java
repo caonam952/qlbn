@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 public class RecordDto {
-    private int id;
+    private UUID id;
 
     @NotEmpty(message = "không để trống")
     private String medicalHistory;

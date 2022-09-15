@@ -9,13 +9,14 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 public class PrescriptionDto {
-    private int id;
+    private UUID id;
 
     @NotEmpty(message = "không để trống")
     private LocalDate prescriptionDate;

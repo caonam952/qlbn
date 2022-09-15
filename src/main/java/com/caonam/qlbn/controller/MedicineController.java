@@ -8,42 +8,44 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/medicines")
+@RequestMapping("/api")
 public class MedicineController {
 
-    private MedicineService medicineService;
+    private final MedicineService medicineService;
 
     @Autowired
-    public MedicineController(MedicineService theMedicineService) {
-        medicineService = theMedicineService;
+    public MedicineController(MedicineService medicineService) {
+        this.medicineService = medicineService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/medicines/list")
     public ResponseEntity<List<MedicineDto>> findAllMedicine() {
         return new ResponseEntity<>(medicineService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{medicineId}")
-    public ResponseEntity<MedicineDto> findMedicineById(@PathVariable int medicineId) {
+    @GetMapping("/medicines/{medicineId}")
+    public ResponseEntity<MedicineDto> findMedicineById(@PathVariable UUID medicineId) {
         Optional<MedicineDto> medicineDtoOptional = medicineService.findById(medicineId);
         return medicineDtoOptional.map(medicineDto -> {
             return new ResponseEntity<>(medicineDto, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
-    public ResponseEntity<?> saveMedicine(MedicineDto medicineDto) {
-        medicineDto.setId(0);
+    @PostMapping("/medicines")
+    public ResponseEntity<?> saveMedicine(@RequestBody @Valid MedicineDto medicineDto) {
+        medicineDto.setId(null);
         medicineService.save(medicineDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/{medicineId}")
-    public ResponseEntity<?> updateMedicine(MedicineDto medicineDto, @PathVariable int medicineId) {
+    @PutMapping("/medicines/{medicineId}")
+    public ResponseEntity<?> updateMedicine(@RequestBody @Valid MedicineDto medicineDto, @PathVariable UUID medicineId) {
         Optional<MedicineDto> medicineDtoOptional = medicineService.findById(medicineId);
         return medicineDtoOptional.map(medicineDTO -> {
             medicineService.save(medicineDto);
@@ -51,12 +53,12 @@ public class MedicineController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("/{employeeId}")
-    public ResponseEntity<MedicineDto> deleteMedicine(@PathVariable int employeeId) {
+    @DeleteMapping("/medicines/{medicinesId}")
+    public ResponseEntity<MedicineDto> deleteMedicine(@PathVariable UUID medicinesId) {
         // Lấy thử đối tượng có id đó ra xem tồn tại chưa để xóa, ko thì trả về status not found
-        Optional<MedicineDto> medicineDtoOptional = medicineService.findById(employeeId);
+        Optional<MedicineDto> medicineDtoOptional = medicineService.findById(medicinesId);
         return medicineDtoOptional.map(medicineDTO -> {
-            medicineService.deleteById(employeeId);
+            medicineService.deleteById(medicinesId);
             return new ResponseEntity<>(medicineDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

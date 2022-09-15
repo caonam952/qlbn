@@ -8,13 +8,14 @@ import lombok.Setter;
 import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 public class EmployeeDto {
-    private int id;
+    private UUID id;
 
     @NotEmpty(message = "không để trống")
     private String name;

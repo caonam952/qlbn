@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "employee")
@@ -15,9 +18,9 @@ import javax.persistence.*;
 @Getter
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    @Type(type = "uuid-char")
+    private UUID id = UUID.randomUUID();
 
     @Column(name = "name")
     private String name;
@@ -26,11 +29,8 @@ public class Employee {
     @Column(name = "position")
     private String position;
 
-    //    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinColumn(name = "record_id")
-//    private Record record;
-
-    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "employee",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "prescription_id")
-    private Prescription prescription;
+    private List<Prescription> prescription;
 }
