@@ -27,9 +27,9 @@ public class EmployeeDto {
 
     private static ModelMapper modelMapper = new ModelMapper();
 
-    public static EmployeeDto toDto(Employee employee) {
-        EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
-        dto.setPrescriptionDto(modelMapper.map(employee.getPrescription(), PrescriptionDto.class));
-        return dto;
-    }
+//    public static EmployeeDto toDto(Employee employee) {
+//        EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
+//        dto.setPrescriptionDto(modelMapper.map(employee.getPrescription(), PrescriptionDto.class));
+//        return dto;
+//    }
 }

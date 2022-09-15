@@ -31,6 +31,5 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee",
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "prescription_id")
-    private List<Prescription> prescription;
+    private List<Prescription> prescriptions;
 }

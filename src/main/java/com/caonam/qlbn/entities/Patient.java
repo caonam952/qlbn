@@ -49,7 +49,6 @@ public class Patient {
 
     @OneToMany(mappedBy = "patient",
             cascade = CascadeType.ALL)
-    @JoinColumn(name = "prescription_id")
     private List<Prescription> prescriptions;
 
 

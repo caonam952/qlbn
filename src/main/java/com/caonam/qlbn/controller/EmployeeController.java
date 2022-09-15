@@ -47,7 +47,7 @@ public class EmployeeController {
     public ResponseEntity<?> updateEmployee(@RequestBody @Valid EmployeeDto employeeDto, @PathVariable UUID employeeId) {
         Optional<EmployeeDto> employeeDtoOptional = employeeService.findById(employeeId);
         return employeeDtoOptional.map(employeeDTO -> {
-            employeeService.save(employeeDto);
+            employeeService.update(employeeDto, employeeId);
             return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

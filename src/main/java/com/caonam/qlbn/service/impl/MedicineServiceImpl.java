@@ -38,7 +38,7 @@ public class MedicineServiceImpl implements MedicineService {
     public Optional<MedicineDto> findById(UUID id) {
         Optional<Medicine> result = medicineRepository.findById(id);
 
-        Optional<MedicineDto> tempMedicineDto = result.map(result1 -> modelMapper.map(result1, MedicineDto.class));
+        Optional<MedicineDto> tempMedicineDto = result.map(medicine -> modelMapper.map(medicine, MedicineDto.class));
 
         return tempMedicineDto;
     }

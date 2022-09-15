@@ -20,7 +20,8 @@ public class PatientControler {
 
     private final PatientService patientService;
 
-    @Autowired PatientControler(PatientService thePatientService) {
+    @Autowired
+    public PatientControler(PatientService thePatientService) {
         patientService = thePatientService;
     }
 
@@ -48,7 +49,7 @@ public class PatientControler {
     public ResponseEntity<?> updatePatient(@RequestBody @Valid PatientDto patientDto, @PathVariable UUID patientId) {
         Optional<PatientDto> patientDtoOptional = patientService.findById(patientId);
         return patientDtoOptional.map(patientDTO -> {
-            patientService.save(patientDTO);
+            patientService.save(patientDto);
             return new ResponseEntity<>(patientDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

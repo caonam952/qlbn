@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeDto> findAll() {
         return employeeRepository.findAll()
                 .stream()
-                .map(EmployeeDto::toDto)
+                .map(employee -> modelMapper.map(employee, EmployeeDto.class))
                 .collect(Collectors.toList());
     }
 
@@ -38,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Optional<EmployeeDto> findById(UUID id) {
         Optional<Employee> result = employeeRepository.findById(id);
 
-        Optional<EmployeeDto> tempEmployeeDto = result.map(result1 -> modelMapper.map(result1, EmployeeDto.class));
+        Optional<EmployeeDto> tempEmployeeDto = result.map(employee -> modelMapper.map(employee, EmployeeDto.class));
 
         return tempEmployeeDto;
     }
@@ -64,4 +64,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
+    @Override
+    public void update(EmployeeDto employeeDto, UUID id) {
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        employee.setName(employeeDto.getName());
+        employee.setPosition(employeeDto.getPosition());
+//        employee.setPrescription(modelMapper.map(employeeDto.getPrescriptionDto(), Prescription.class));
+        modelMapper.map(employeeRepository.save(employee), EmployeeDto.class);
+
+
+    }
 }

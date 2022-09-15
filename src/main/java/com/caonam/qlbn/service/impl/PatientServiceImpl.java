@@ -38,7 +38,7 @@ public class PatientServiceImpl implements PatientService {
     public Optional<PatientDto> findById(UUID id) {
         Optional<Patient> result = patientRepository.findById(id);
 
-        Optional<PatientDto> tempPatientDto = result.map(result1 -> modelMapper.map(result1, PatientDto.class));
+        Optional<PatientDto> tempPatientDto = result.map(patient -> modelMapper.map(patient, PatientDto.class));
 
         return tempPatientDto;
     }
@@ -55,6 +55,7 @@ public class PatientServiceImpl implements PatientService {
         patient.setNote(patientDto.getNote());
         modelMapper.map(patientRepository.save(patient), PatientDto.class);
     }
+
 
     @Override
     public void deleteById(UUID id) {
