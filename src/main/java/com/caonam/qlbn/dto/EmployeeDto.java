@@ -23,9 +23,9 @@ public class EmployeeDto {
     @NotEmpty(message = "không để trống")
     private String position;
 
-    private PrescriptionDto prescriptionDto;
-
-    private static ModelMapper modelMapper = new ModelMapper();
+//    private PrescriptionDto prescriptionDto;
+//
+//    private static ModelMapper modelMapper = new ModelMapper();
 
 //    public static EmployeeDto toDto(Employee employee) {
 //        EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);

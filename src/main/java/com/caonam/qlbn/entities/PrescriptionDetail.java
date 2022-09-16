@@ -1,4 +1,5 @@
 package com.caonam.qlbn.entities;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,17 +8,16 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "patient")
+@Table(name = "prescription_detail")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-public class Patient {
+public class PrescriptionDetail {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "UUID")
@@ -27,36 +27,24 @@ public class Patient {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column(name = "name")
-    private String name;
+    //số lượng thuốc
+    @Column(name = "amount")
+    private int amount;
 
-    @Column(name = "birth")
-    private LocalDate birth;
+    //liều dùng
+    @Column(name = "dosage")
+    private String dosage;
 
-    @Column(name = "sex")
-    private String sex;
-
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "phone")
-    private String phone;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "note")
-    private String note;
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "prescription_id")
+    private Prescription prescription;
 
     @OneToOne(
-            mappedBy = "patient",
+//            mappedBy = "prescriptionDetail",
+            fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinColumn(name = "record_id")
-    private Record record;
-
-    @OneToMany(mappedBy = "patient",
-            cascade = CascadeType.ALL)
-    private List<Prescription> prescriptions;
+    @JoinColumn(name = "medicine_id")
+    private Medicine medicine;
 
 
 }

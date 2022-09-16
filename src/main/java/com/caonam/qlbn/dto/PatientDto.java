@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -21,7 +22,7 @@ public class PatientDto {
     @NotEmpty(message = "không để trống")
     private String name;
 
-    @NotEmpty(message = "không để trống")
+    @NotNull(message = "không để trống")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Past
     private LocalDate birth;
@@ -41,4 +42,8 @@ public class PatientDto {
 
     @Column(name = "note")
     private String note;
+
+    private RecordDto recordDto;
+
+    private List<PrescriptionDto> prescriptionDtos;
 }

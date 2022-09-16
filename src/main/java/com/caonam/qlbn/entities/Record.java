@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -19,8 +20,12 @@ import java.util.UUID;
 public class Record {
     @Id
     @Column(name = "id")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator")
     @Type(type = "uuid-char")
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
 //    //tiền sử bệnh
 //    @Column(name = "heath_history")
@@ -52,7 +57,8 @@ public class Record {
     @Column(name = "after_image")
     private String afterImage;
 
-    @OneToOne(mappedBy = "record",
+    @OneToOne(
+//            mappedBy = "record",
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "patient_id")
     private Patient patient;

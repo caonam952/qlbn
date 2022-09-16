@@ -20,8 +20,8 @@ public class MedicineController {
     private final MedicineService medicineService;
 
     @Autowired
-    public MedicineController(MedicineService medicineService) {
-        this.medicineService = medicineService;
+    public MedicineController(MedicineService theMedicineService) {
+        this.medicineService = theMedicineService;
     }
 
     @GetMapping("/medicines/list")
@@ -39,7 +39,7 @@ public class MedicineController {
 
     @PostMapping("/medicines")
     public ResponseEntity<?> saveMedicine(@RequestBody @Valid MedicineDto medicineDto) {
-        medicineDto.setId(null);
+//        medicineDto.setId(null);
         medicineService.save(medicineDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

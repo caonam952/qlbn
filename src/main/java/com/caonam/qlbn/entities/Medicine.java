@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -19,9 +20,12 @@ import java.util.UUID;
 public class Medicine {
     @Id
     @Column(name = "id")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator")
     @Type(type = "uuid-char")
-    private UUID id = UUID.randomUUID();
-
+    private UUID id;
 
     @Column(name = "name")
     private String name;
@@ -34,6 +38,9 @@ public class Medicine {
 
     @Column(name = "amount")
     private int amount;
+
+    @Column(name = "import_date")
+    private LocalDate importDate;
 
     @Column(name = "exp_date")
     private LocalDate expDate;
@@ -50,8 +57,14 @@ public class Medicine {
     @Column(name = "note")
     private String note;
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
-    @JoinColumn(name = "prescription_id")
-    private Prescription prescription;
+//    @ManyToOne(fetch = FetchType.LAZY,
+//            cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+//    @JoinColumn(name = "prescription_id")
+//    private Prescription prescription;
+
+//    @ManyToOne(fetch = FetchType.LAZY,
+//            cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+//    @JoinColumn(name = "prescription_detail_id")
+//    private PrescriptionDetail prescriptionDetail;
+
 }

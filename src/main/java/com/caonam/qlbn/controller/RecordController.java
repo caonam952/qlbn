@@ -39,8 +39,27 @@ public class RecordController {
 
     @PostMapping("/records")
     public ResponseEntity<?> saveRecord(@RequestBody @Valid RecordDto recordDto) {
-        recordDto.setId(null);
+//        recordDto.setId(null);
         recordService.save(recordDto);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/records/{recordId}")
+    public ResponseEntity<?> updateRecord(@RequestBody @Valid RecordDto recordDto, UUID recordId) {
+        Optional<RecordDto> recordDtoOptional = recordService.findById(recordId);
+        return recordDtoOptional.map(patientDTO -> {
+            recordService.update(recordDto, recordId);
+            return new ResponseEntity<>(patientDTO, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/records/{recordId}")
+    public ResponseEntity<RecordDto> deletePatient(@PathVariable UUID recordId) {
+        // Lấy thử đối tượng có id đó ra xem tồn tại chưa để xóa, ko thì trả về status not found
+        Optional<RecordDto> recordDtoOptional = recordService.findById(recordId);
+        return recordDtoOptional.map(patientDTO -> {
+            recordService.deleteById(recordId);
+            return new ResponseEntity<>(patientDTO, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

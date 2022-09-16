@@ -47,16 +47,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void save(EmployeeDto employeeDto) {
         Employee employee = new Employee();
-        employee.setName(employeeDto.getName());
-        employee.setPosition(employeeDto.getPosition());
-//        employee.setPrescription(modelMapper.map(employeeDto.getPrescriptionDto(), Prescription.class));
+        setEmployee(employeeDto,employee);
         modelMapper.map(employeeRepository.save(employee), EmployeeDto.class);
     }
-
-//    @Override
-//    public void update(String name, String position, int id) {
-//        employeeRepository.updateEmployee();
-//    }
 
     @Override
     public void deleteById(UUID id) {
@@ -67,9 +60,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void update(EmployeeDto employeeDto, UUID id) {
         Employee employee = employeeRepository.findById(id).orElse(null);
+        setEmployee(employeeDto, employee);
+        modelMapper.map(employeeRepository.save(employee), EmployeeDto.class);
+    }
+
+    private void setEmployee(EmployeeDto employeeDto, Employee employee){
         employee.setName(employeeDto.getName());
         employee.setPosition(employeeDto.getPosition());
-//        employee.setPrescription(modelMapper.map(employeeDto.getPrescriptionDto(), Prescription.class));
-        modelMapper.map(employeeRepository.save(employee), EmployeeDto.class);
     }
 }

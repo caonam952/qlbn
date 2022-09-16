@@ -1,5 +1,6 @@
 package com.caonam.qlbn.service.impl;
 
+import com.caonam.qlbn.dao.PatientRepository;
 import com.caonam.qlbn.dao.RecordRepository;
 import com.caonam.qlbn.dto.RecordDto;
 import com.caonam.qlbn.entities.Patient;
@@ -19,6 +20,8 @@ public class RecordServiceImpl implements RecordService {
 
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    PatientRepository patientRepository;
 
     private static RecordRepository recordRepository;
 
@@ -47,6 +50,10 @@ public class RecordServiceImpl implements RecordService {
     public void save(RecordDto recordDto) {
         Record record = new Record();
         setRecord(recordDto,record);
+
+        Optional<Patient> patient = patientRepository.findById(recordDto.getPatientDto().getId());
+        patient.ifPresent(record::setPatient);
+
         modelMapper.map(recordRepository.save(record), RecordDto.class);
     }
 
@@ -60,13 +67,12 @@ public class RecordServiceImpl implements RecordService {
 
     private void setRecord(RecordDto recordDto, Record record) {
         record.setMedicalHistory(recordDto.getMedicalHistory());
-        record.setProductInUse(record.getProductInUse());
+        record.setProductInUse(recordDto.getProductInUse());
         record.setDiagnose(recordDto.getDiagnose());
         record.setResult(recordDto.getResult());
         record.setRegimen(recordDto.getRegimen());
         record.setPreImage(recordDto.getPreImage());
-        record.setAfterImage(record.getAfterImage());
-        record.setPatient(modelMapper.map(recordDto.getPatientDto(), Patient.class));
+        record.setAfterImage(recordDto.getAfterImage());
     }
 
     @Override

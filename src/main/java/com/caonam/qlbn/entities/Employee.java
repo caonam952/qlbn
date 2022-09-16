@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -19,8 +20,12 @@ import java.util.UUID;
 public class Employee {
     @Id
     @Column(name = "id")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator")
     @Type(type = "uuid-char")
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     @Column(name = "name")
     private String name;
@@ -29,7 +34,7 @@ public class Employee {
     @Column(name = "position")
     private String position;
 
-    @OneToMany(mappedBy = "employee",
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Prescription> prescriptions;
+//    @OneToMany(mappedBy = "employee",
+//            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//    private List<Prescription> prescriptions;
 }

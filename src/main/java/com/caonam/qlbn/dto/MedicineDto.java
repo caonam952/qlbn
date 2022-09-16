@@ -9,6 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -29,18 +31,23 @@ public class MedicineDto {
     @NotEmpty(message = "không để trống")
     private String uni;
 
-    @NotEmpty(message = "không để trống")
+    @NotNull(message = "không để trống")
     private int amount;
 
-    @NotEmpty(message = "không để trống")
+    @NotNull(message = "không để trống")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Past
+    private LocalDate importDate;
+
+    @NotNull(message = "không để trống")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Future
     private LocalDate expDate;
 
-    @NotEmpty(message = "không để trống")
+    @NotNull(message = "không để trống")
     private Double importPrice;
 
-    @NotEmpty(message = "không để trống")
+    @NotNull(message = "không để trống")
     private Double price;
 
     @NotEmpty(message = "không để trống")
@@ -48,5 +55,5 @@ public class MedicineDto {
 
     private String note;
 
-    private PrescriptionDto prescriptionDto;
+//    private PrescriptionDto prescriptionDto;
 }

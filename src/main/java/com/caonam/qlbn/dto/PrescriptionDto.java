@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -18,21 +19,17 @@ import java.util.UUID;
 public class PrescriptionDto {
     private UUID id;
 
-    @NotEmpty(message = "không để trống")
+    @NotNull(message = "không để trống")
     private LocalDate prescriptionDate;
 
-    @NotEmpty(message = "không để trống")
+    @NotNull(message = "không để trống")
     @Future
     private LocalDate appointmentDate;
-
-    private int amount;
-
-    private String dosage;
 
     private PatientDto patientDto;
 
     private EmployeeDto employeeDto;
 
-    private List<MedicineDto> medicineDtos;
+    private List<PrescriptionDetailDto> prescriptionDetailDtos;
 
 }

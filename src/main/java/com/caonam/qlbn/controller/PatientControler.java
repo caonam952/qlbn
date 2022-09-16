@@ -40,7 +40,7 @@ public class PatientControler {
 
     @PostMapping("/patients")
     public ResponseEntity<?> savePatient(@RequestBody @Valid PatientDto patientDto) {
-        patientDto.setId(null);
+//        patientDto.setId(null);
         patientService.save(patientDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

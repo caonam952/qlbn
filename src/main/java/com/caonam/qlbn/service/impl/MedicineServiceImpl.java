@@ -1,6 +1,7 @@
 package com.caonam.qlbn.service.impl;
 
 import com.caonam.qlbn.dao.MedicineRepository;
+import com.caonam.qlbn.dao.PrescriptionRepository;
 import com.caonam.qlbn.dto.MedicineDto;
 import com.caonam.qlbn.entities.Medicine;
 import com.caonam.qlbn.service.MedicineService;
@@ -21,9 +22,12 @@ public class MedicineServiceImpl implements MedicineService {
 
     private static MedicineRepository medicineRepository;
 
+    private static PrescriptionRepository prescriptionRepository;
+
     @Autowired
-    public MedicineServiceImpl(MedicineRepository theMedicineRepository) {
+    public MedicineServiceImpl(MedicineRepository theMedicineRepository, PrescriptionRepository thePrescriptionRepository) {
         medicineRepository = theMedicineRepository;
+        prescriptionRepository = thePrescriptionRepository;
     }
 
     @Override
@@ -58,11 +62,12 @@ public class MedicineServiceImpl implements MedicineService {
 
     }
 
-    private void setMedicine(MedicineDto medicineDto, Medicine medicine) {
+    static void setMedicine(MedicineDto medicineDto, Medicine medicine) {
         medicine.setName(medicineDto.getName());
         medicine.setOrigin(medicineDto.getOrigin());
         medicine.setUni(medicineDto.getUni());
         medicine.setAmount(medicineDto.getAmount());
+        medicine.setImportDate(medicineDto.getImportDate());
         medicine.setExpDate(medicineDto.getExpDate());
         medicine.setImportPrice(medicineDto.getImportPrice());
         medicine.setPrice(medicineDto.getPrice());
