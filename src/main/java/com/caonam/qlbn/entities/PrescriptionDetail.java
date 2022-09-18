@@ -1,11 +1,13 @@
 package com.caonam.qlbn.entities;
 
+import com.caonam.qlbn.dto.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
 import java.util.List;
@@ -45,6 +47,7 @@ public class PrescriptionDetail {
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "medicine_id")
     private Medicine medicine;
+
 
 
 }

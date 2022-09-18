@@ -45,7 +45,7 @@ public class RecordController {
     }
 
     @PutMapping("/records/{recordId}")
-    public ResponseEntity<?> updateRecord(@RequestBody @Valid RecordDto recordDto, UUID recordId) {
+    public ResponseEntity<?> updateRecord(@RequestBody @Valid RecordDto recordDto,@PathVariable UUID recordId) {
         Optional<RecordDto> recordDtoOptional = recordService.findById(recordId);
         return recordDtoOptional.map(patientDTO -> {
             recordService.update(recordDto, recordId);

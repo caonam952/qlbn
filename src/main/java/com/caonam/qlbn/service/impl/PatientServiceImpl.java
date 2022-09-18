@@ -54,9 +54,9 @@ public class PatientServiceImpl implements PatientService {
     public void save(PatientDto patientDto) {
         Patient patient = new Patient();
         setPatient(patientDto, patient);
-        if (!ObjectUtils.isEmpty(patientDto.getRecordDto())) {
-            patient.setRecord(modelMapper.map(patientDto.getRecordDto(), Record.class));
-        }
+//        if (!ObjectUtils.isEmpty(patientDto.getRecordDto())) {
+//            patient.setRecord(modelMapper.map(patientDto.getRecordDto(), Record.class));
+//        }
         if (!ObjectUtils.isEmpty(patientDto.getPrescriptionDtos())) {
             patient.setPrescriptions(initPrescription(patientDto.getPrescriptionDtos(), patient));
         }
@@ -69,9 +69,9 @@ public class PatientServiceImpl implements PatientService {
 
         setPatient(patientDto, patient);
 
-        if (!ObjectUtils.isEmpty(patientDto.getRecordDto())) {
-            patient.setRecord(modelMapper.map(patientDto.getRecordDto(), Record.class));
-        }
+//        if (!ObjectUtils.isEmpty(patientDto.getRecordDto())) {
+//            patient.setRecord(modelMapper.map(patientDto.getRecordDto(), Record.class));
+//        }
         if (!ObjectUtils.isEmpty(patientDto.getPrescriptionDtos())) {
             patient.setPrescriptions(initPrescription(patientDto.getPrescriptionDtos(), patient));
         }

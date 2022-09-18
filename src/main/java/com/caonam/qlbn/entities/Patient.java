@@ -48,11 +48,11 @@ public class Patient {
     @Column(name = "note")
     private String note;
 
-    @OneToOne(
-            mappedBy = "patient",
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinColumn(name = "record_id")
-    private Record record;
+//    @OneToOne(
+//            mappedBy = "patient",
+//            cascade = CascadeType.ALL)
+////    @JoinColumn(name = "record_id")
+//    private Record record;
 
     @OneToMany(mappedBy = "patient",
             cascade = CascadeType.ALL)

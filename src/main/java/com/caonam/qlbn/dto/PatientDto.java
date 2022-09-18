@@ -43,7 +43,7 @@ public class PatientDto {
     @Column(name = "note")
     private String note;
 
-    private RecordDto recordDto;
+//    private RecordDto recordDto;
 
     private List<PrescriptionDto> prescriptionDtos;
 }

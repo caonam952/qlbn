@@ -1,10 +1,11 @@
 package com.caonam.qlbn.service.impl;
 
+import com.caonam.qlbn.dao.EmployeeRepository;
+import com.caonam.qlbn.dao.PatientRepository;
 import com.caonam.qlbn.dao.PrescriptionDetailRepository;
 import com.caonam.qlbn.dao.PrescriptionRepository;
 import com.caonam.qlbn.dto.PrescriptionDetailDto;
 import com.caonam.qlbn.dto.PrescriptionDto;
-import com.caonam.qlbn.entities.Employee;
 import com.caonam.qlbn.entities.Patient;
 import com.caonam.qlbn.entities.Prescription;
 import com.caonam.qlbn.entities.PrescriptionDetail;
@@ -12,6 +13,7 @@ import com.caonam.qlbn.service.PrescriptionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,17 +31,23 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     private static PrescriptionDetailRepository prescriptionDetailRepository;
 
+    private static EmployeeRepository employeeRepository;
+
+    private static PatientRepository patientRepository;
+
     @Autowired
-    public PrescriptionServiceImpl(PrescriptionRepository thePrescriptionRepository, PrescriptionDetailRepository thePrescriptionDetailRepository) {
+    public PrescriptionServiceImpl(PrescriptionRepository thePrescriptionRepository, PrescriptionDetailRepository thePrescriptionDetailRepository, EmployeeRepository theEmployeeRepository, PatientRepository thePatientRepository) {
         prescriptionRepository = thePrescriptionRepository;
         prescriptionDetailRepository = thePrescriptionDetailRepository;
+        employeeRepository = theEmployeeRepository;
+        patientRepository = thePatientRepository;
     }
 
     @Override
     public List<PrescriptionDto> findAll() {
         return prescriptionRepository.findAll()
                 .stream()
-                .map(prescription -> modelMapper.map(prescription, PrescriptionDto.class))
+                .map(PrescriptionDto::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -57,27 +65,26 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         Prescription prescription = new Prescription();
 
         setPrescription(prescriptionDto, prescription);
-        prescription.setPrescriptionDetails(initPrescriptionDetail(prescriptionDto.getPrescriptionDetailDtos(), prescription));
-
+//        if (!ObjectUtils.isEmpty(prescriptionDto.getPrescriptionDetailDtos())) {
+//            prescription.setPrescriptionDetails(initPrescriptionDetail(prescriptionDto.getPrescriptionDetailDtos(), prescription));
+//        }
         modelMapper.map(prescriptionRepository.save(prescription), PrescriptionDto.class);
     }
 
     @Override
     public void update(PrescriptionDto prescriptionDto, UUID id) {
-        Prescription prescription = prescriptionRepository.findById(id).orElse(null);
+        Prescription prescription = prescriptionRepository.findById(id).orElse(new Prescription());
 
         setPrescription(prescriptionDto, prescription);
-        if (!prescriptionDto.getPrescriptionDetailDtos().isEmpty()) {
-            for (PrescriptionDetailDto prescriptionDetailDto : prescriptionDto.getPrescriptionDetailDtos()) {
-                prescriptionDetailRepository.findById(prescriptionDetailDto.getId())
-                        .map(prescriptionDetail -> {
-                            prescriptionDetail.setAmount(prescriptionDetailDto.getAmount());
-                            prescriptionDetail.setDosage(prescriptionDetailDto.getDosage());
-                            prescriptionDetail.setPrescription(prescription);
-                            return prescriptionDetail;
-                        });
-            }
-        }
+//        if (!ObjectUtils.isEmpty(prescriptionDto.getPrescriptionDetailDtos())) {
+//            for (PrescriptionDetailDto prescriptionDetailDto : prescriptionDto.getPrescriptionDetailDtos()) {
+//                prescriptionDetailRepository.findById(prescriptionDetailDto.getId())
+//                        .map(prescriptionDetail -> {
+//                            prescription.setPrescriptionDetails(prescription);
+//                            return prescriptionDetail;
+//                        });
+//            }
+//        }
 
         modelMapper.map(prescriptionRepository.save(prescription), PrescriptionDto.class);
 
@@ -86,8 +93,28 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private void setPrescription(PrescriptionDto prescriptionDto, Prescription prescription) {
         prescription.setPrescriptionDate(prescriptionDto.getPrescriptionDate());
         prescription.setAppointmentDate(prescriptionDto.getAppointmentDate());
-        prescription.setPatient(modelMapper.map(prescriptionDto.getPatientDto().getId(), Patient.class));
-        prescription.setEmployee(modelMapper.map(prescriptionDto.getEmployeeDto().getId(), Employee.class));
+
+        if (!ObjectUtils.isEmpty(prescriptionDto.getEmployeeDto())) {
+            employeeRepository.findById(prescriptionDto.getEmployeeDto().getId())
+                    .map(employee -> {
+                        prescription.setEmployee(employee);
+                        return prescription;
+                    });
+        }
+
+        if (!ObjectUtils.isEmpty(prescriptionDto.getPatientDto())) {
+            patientRepository.findById(prescriptionDto.getPatientDto().getId())
+                    .map(patient -> {
+                        prescription.setPatient(patient);
+                        return prescription;
+                    });
+        }
+
+        if (!ObjectUtils.isEmpty(prescriptionDto.getPrescriptionDetailDtos())) {
+            prescription.setPrescriptionDetails(initPrescriptionDetail(prescriptionDto.getPrescriptionDetailDtos(), prescription));
+        }
+//        prescription.setPatient(modelMapper.map(prescriptionDto.getPatientDto(), Patient.class));
+//        prescription.setEmployee(modelMapper.map(prescriptionDto.getEmployeeDto(), Employee.class));
     }
 
     public List<PrescriptionDetail> initPrescriptionDetail(List<PrescriptionDetailDto> prescriptionDetailDtos, Prescription prescription) {

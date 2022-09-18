@@ -1,9 +1,11 @@
 package com.caonam.qlbn.dto;
 
+import com.caonam.qlbn.entities.Record;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
@@ -34,5 +36,11 @@ public class RecordDto {
     private String afterImage;
 
     private PatientDto patientDto;
+
+    public static RecordDto toDto(Record record) {
+        RecordDto dto = new ModelMapper().map(record, RecordDto.class);
+        dto.setPatientDto(new ModelMapper().map(record.getPatient(), PatientDto.class));
+        return dto;
+    }
 
 }
