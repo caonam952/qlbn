@@ -10,11 +10,8 @@ import com.caonam.qlbn.security.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -34,7 +31,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/api")
 public class UserController {
     private final UserService userService;
-
+    
     @Autowired
     public UserController(UserService theUserService) {
         userService = theUserService;
@@ -52,6 +49,13 @@ public class UserController {
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
+    @PutMapping("/user/update")
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        //tra ve ma 201: thong bao da dc tao tren database
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+        return ResponseEntity.created(uri).body(userService.saveUser(user));
+    }
+
     @PostMapping("/role/save")
     public ResponseEntity<Role> saveRole(@RequestBody Role role) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
@@ -64,6 +68,28 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable Long id){
+        Optional<User> userOptional = userService.findUserById(id);
+//        userService.deleteById(id);
+//        return ResponseEntity.ok().
+        if (userOptional.isPresent()) {
+            userService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/role/{id}")
+    public ResponseEntity<Role> deleteRole(@PathVariable Long id){
+        Optional<Role> roleOptional = userService.findRoleById(id);
+//        userService.deleteById(id);
+//        return ResponseEntity.ok().
+        if (roleOptional.isPresent()) {
+            userService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);

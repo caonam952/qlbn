@@ -15,8 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -40,10 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests().antMatchers("/api/login/**","/api/token/refresh/**").permitAll()
-                .and()
-                .authorizeRequests().antMatchers(GET, "/api/user/**").hasAnyAuthority("USER")
-                .and()
-                .authorizeRequests().antMatchers(POST, "/api/user/save/**").hasAnyAuthority("ADMIN")
+                                    .antMatchers(GET, "/api/user/**").hasAnyAuthority("USER")
+                                    .antMatchers(POST, "/api/user/save/**").hasAnyAuthority("ADMIN")
+                                    .antMatchers(DELETE, "/api/user/**").hasAnyAuthority("ADMIN")
+                                    .antMatchers(PUT, "/api/user/update/**").hasAnyAuthority("ADMIN")
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()

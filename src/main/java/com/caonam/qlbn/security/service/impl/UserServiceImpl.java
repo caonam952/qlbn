@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -82,9 +83,34 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public Optional<User> findUserById(Long id) {
+        log.info("Find user on id: {}", id);
+        Optional<User> result = userRepository.findById(id);
+        return result;
+    }
+
+    @Override
+    public Optional<Role> findRoleById(Long id) {
+        log.info("Find role on id: {}", id);
+        Optional<Role> result = roleRepository.findById(id);
+        return result;
+    }
+
+//    @Override
+//    public void update(User user, Long id) {
+//        log.info("Update user on id {}", id);
+//    }
+
+    @Override
     public List<User> getUsers() {
         log.info("Fetching all user");
         return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        log.info("delete user on id {}", id);
+        userRepository.deleteById(id);
     }
 
 
