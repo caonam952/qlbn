@@ -1,4 +1,4 @@
-package com.caonam.qlbn.security.Repository;
+package com.caonam.qlbn.security.repository;
 
 import com.caonam.qlbn.security.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

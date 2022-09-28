@@ -1,7 +1,7 @@
 package com.caonam.qlbn.security.service.impl;
 
-import com.caonam.qlbn.security.Repository.RoleRepository;
-import com.caonam.qlbn.security.Repository.UserRepository;
+import com.caonam.qlbn.security.repository.RoleRepository;
+import com.caonam.qlbn.security.repository.UserRepository;
 import com.caonam.qlbn.security.entity.Role;
 import com.caonam.qlbn.security.entity.User;
 import com.caonam.qlbn.security.service.UserService;

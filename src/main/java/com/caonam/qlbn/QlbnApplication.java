@@ -30,19 +30,19 @@ public class QlbnApplication {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    CommandLineRunner run(UserService userService) {
-        return args -> {
-            userService.saveRole(new Role(null, "ADMIN"));
-            userService.saveRole(new Role(null, "USER"));
-
-            userService.saveUser(new User(null, "Cao Nam", "caonam", "123", new ArrayList<>()));
-            userService.saveUser(new User(null, "Vu Hong", "vuhong", "123", new ArrayList<>()));
-            userService.saveUser(new User(null, "Pham Kim", "phamkim", "123", new ArrayList<>()));
-
-            userService.addRoleToUser("caonam", "ADMIN");
-            userService.addRoleToUser("vuhong", "USER");
-            userService.addRoleToUser("phamkim", "ADMIN");
-        };
-    }
+//    @Bean
+//    CommandLineRunner run(UserService userService) {
+//        return args -> {
+//            userService.saveRole(new Role(null, "ADMIN"));
+//            userService.saveRole(new Role(null, "USER"));
+//
+//            userService.saveUser(new User(null, "Cao Nam", "caonam", "123", new ArrayList<>()));
+//            userService.saveUser(new User(null, "Vu Hong", "vuhong", "123", new ArrayList<>()));
+//            userService.saveUser(new User(null, "Pham Kim", "phamkim", "123", new ArrayList<>()));
+//
+//            userService.addRoleToUser("caonam", "ADMIN");
+//            userService.addRoleToUser("vuhong", "USER");
+//            userService.addRoleToUser("phamkim", "ADMIN");
+//        };
+//    }
 }
