@@ -52,7 +52,7 @@ public class UserController {
     @PutMapping("/user/update")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
         //tra ve ma 201: thong bao da dc tao tren database
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/update").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
