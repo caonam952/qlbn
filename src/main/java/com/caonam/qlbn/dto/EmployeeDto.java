@@ -1,11 +1,9 @@
 package com.caonam.qlbn.dto;
 
-import com.caonam.qlbn.entities.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.UUID;

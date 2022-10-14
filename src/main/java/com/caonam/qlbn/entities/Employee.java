@@ -34,7 +34,4 @@ public class Employee {
     @Column(name = "position")
     private String position;
 
-//    @OneToMany(mappedBy = "employee",
-//            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    private List<Prescription> prescriptions;
 }
