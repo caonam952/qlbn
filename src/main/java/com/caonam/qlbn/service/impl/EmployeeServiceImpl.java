@@ -67,6 +67,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private void setEmployee(EmployeeDto employeeDto, Employee employee){
         employee.setName(employeeDto.getName());
         employee.setPosition(employeeDto.getPosition());
+        employee.setPhone(employeeDto.getPhone());
+        employee.setEmail(employeeDto.getEmail());
     }
 }
 

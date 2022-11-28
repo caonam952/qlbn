@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
@@ -20,6 +22,13 @@ public class EmployeeDto {
 
     @NotEmpty(message = "không để trống")
     private String position;
+
+    @NotEmpty(message = "không để trống")
+    @Digits(integer = 10, fraction = 0)
+    private String phone;
+
+    @Email(message = "nhập đúng định dạng email")
+    private String email;
 
 //    private PrescriptionDto prescriptionDto;
 //

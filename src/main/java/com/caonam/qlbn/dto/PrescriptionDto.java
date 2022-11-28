@@ -3,6 +3,7 @@ package com.caonam.qlbn.dto;
 import com.caonam.qlbn.entities.Prescription;
 import com.caonam.qlbn.entities.PrescriptionDetail;
 import com.caonam.qlbn.entities.Record;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +29,11 @@ public class PrescriptionDto {
     private LocalDate prescriptionDate;
 
     @NotNull(message = "không để trống")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Future
     private LocalDate appointmentDate;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private PatientDto patientDto;
 
     private EmployeeDto employeeDto;

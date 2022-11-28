@@ -1,10 +1,7 @@
 package com.caonam.qlbn.controller;
 
 import com.caonam.qlbn.dto.PrescriptionDetailDto;
-import com.caonam.qlbn.dto.PrescriptionDto;
-import com.caonam.qlbn.entities.PrescriptionDetail;
 import com.caonam.qlbn.service.PrescriptionDetailService;
-import com.caonam.qlbn.service.PrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api")
 public class PrescriptionDetailController {

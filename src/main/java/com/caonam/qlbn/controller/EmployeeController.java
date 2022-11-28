@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
@@ -49,7 +50,7 @@ public class EmployeeController {
         Optional<EmployeeDto> employeeDtoOptional = employeeService.findById(employeeId);
         return employeeDtoOptional.map(employeeDTO -> {
             employeeService.update(employeeDto, employeeId);
-            return new ResponseEntity<>(employeeDTO, HttpStatus.OK);
+            return new ResponseEntity<>(employeeDto, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

@@ -34,4 +34,10 @@ public class Employee {
     @Column(name = "position")
     private String position;
 
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "email")
+    private String email;
+
 }

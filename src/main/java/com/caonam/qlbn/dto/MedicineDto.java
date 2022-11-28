@@ -1,11 +1,10 @@
 package com.caonam.qlbn.dto;
 
-import com.caonam.qlbn.entities.Employee;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
@@ -35,12 +34,12 @@ public class MedicineDto {
     private int amount;
 
     @NotNull(message = "không để trống")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Past
     private LocalDate importDate;
 
     @NotNull(message = "không để trống")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Future
     private LocalDate expDate;
 

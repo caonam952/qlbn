@@ -1,7 +1,6 @@
 package com.caonam.qlbn.controller;
 
 
-import com.caonam.qlbn.dto.MedicineDto;
 import com.caonam.qlbn.dto.PatientDto;
 import com.caonam.qlbn.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api")
 public class PatientControler {

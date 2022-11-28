@@ -1,5 +1,6 @@
 package com.caonam.qlbn.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class PatientDto {
     private String name;
 
     @NotNull(message = "không để trống")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Past
     private LocalDate birth;
 
