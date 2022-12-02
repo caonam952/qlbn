@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 //bệnh án
@@ -56,6 +57,9 @@ public class Record {
 
     @Column(name = "after_image")
     private String afterImage;
+
+    @Column(name = "create_at")
+    private Date createAt;
 
     @OneToOne(
 //            mappedBy = "record",

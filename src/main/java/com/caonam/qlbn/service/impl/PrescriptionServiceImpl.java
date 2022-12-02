@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,7 +42,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     @Override
     public List<PrescriptionDto> findAll() {
-        return prescriptionRepository.findAll()
+        return prescriptionRepository.getAll()
                 .stream()
                 .map(PrescriptionDto::toDto)
                 .collect(Collectors.toList());
@@ -65,6 +62,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         Prescription prescription = new Prescription();
 
         setPrescription(prescriptionDto, prescription);
+        prescription.setCreateAt(new Date());
 //        if (!ObjectUtils.isEmpty(prescriptionDto.getPrescriptionDetailDtos())) {
 //            prescription.setPrescriptionDetails(initPrescriptionDetail(prescriptionDto.getPrescriptionDetailDtos(), prescription));
 //        }

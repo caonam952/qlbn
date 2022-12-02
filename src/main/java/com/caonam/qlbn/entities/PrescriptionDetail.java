@@ -10,6 +10,7 @@ import org.hibernate.annotations.Type;
 import org.modelmapper.ModelMapper;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,6 +37,9 @@ public class PrescriptionDetail {
     //liều dùng
     @Column(name = "dosage")
     private String dosage;
+
+    @Column(name = "create_at")
+    private Date createAt;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "prescription_id")

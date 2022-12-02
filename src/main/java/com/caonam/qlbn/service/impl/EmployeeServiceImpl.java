@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeDto> findAll() {
-        return employeeRepository.findAll()
+        return employeeRepository.getAll()
                 .stream()
                 .map(employee -> modelMapper.map(employee, EmployeeDto.class))
                 .collect(Collectors.toList());
@@ -48,6 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void save(EmployeeDto employeeDto) {
         Employee employee = new Employee();
         setEmployee(employeeDto,employee);
+        employee.setCreateAt(new Date());
         modelMapper.map(employeeRepository.save(employee), EmployeeDto.class);
     }
 
@@ -69,6 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPosition(employeeDto.getPosition());
         employee.setPhone(employeeDto.getPhone());
         employee.setEmail(employeeDto.getEmail());
+
     }
 }
 

@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,7 +33,7 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public List<MedicineDto> findAll() {
-        return medicineRepository.findAll()
+        return medicineRepository.getAll()
                 .stream()
                 .map(medicine -> modelMapper.map(medicine, MedicineDto.class))
                 .collect(Collectors.toList());
@@ -51,6 +52,7 @@ public class MedicineServiceImpl implements MedicineService {
     public void save(MedicineDto medicineDto) {
         Medicine medicine = new Medicine();
         setMedicine(medicineDto, medicine);
+        medicine.setCreateAt(new Date());
         modelMapper.map(medicineRepository.save(medicine), MedicineDto.class);
     }
 
@@ -59,7 +61,6 @@ public class MedicineServiceImpl implements MedicineService {
         Medicine medicine = medicineRepository.findById(id).orElse(null);
         setMedicine(medicineDto, medicine);
         modelMapper.map(medicineRepository.save(medicine), MedicineDto.class);
-
     }
 
     static void setMedicine(MedicineDto medicineDto, Medicine medicine) {

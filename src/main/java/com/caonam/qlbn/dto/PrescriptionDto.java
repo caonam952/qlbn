@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,6 +37,9 @@ public class PrescriptionDto {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private PatientDto patientDto;
+
+    @Column(name = "create_at")
+    private Date createAt;
 
     private EmployeeDto employeeDto;
 

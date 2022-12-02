@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,6 +45,7 @@ public class PatientDto {
     @Column(name = "note")
     private String note;
 
+    private Date createAt;
 //    private RecordDto recordDto;
 
     private List<PrescriptionDto> prescriptionDtos;

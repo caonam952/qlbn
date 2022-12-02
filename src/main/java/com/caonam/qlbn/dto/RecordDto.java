@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -34,6 +35,8 @@ public class RecordDto {
     private String preImage;
 
     private String afterImage;
+
+    private Date createAt;
 
     private PatientDto patientDto;
 

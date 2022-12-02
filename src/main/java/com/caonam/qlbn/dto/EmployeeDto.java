@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -29,6 +30,8 @@ public class EmployeeDto {
 
     @Email(message = "nhập đúng định dạng email")
     private String email;
+
+    private Date createAt;
 
 //    private PrescriptionDto prescriptionDto;
 //

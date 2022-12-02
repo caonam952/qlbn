@@ -8,7 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -39,5 +39,8 @@ public class Employee {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "create_at")
+    private Date createAt;
 
 }

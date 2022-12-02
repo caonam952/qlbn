@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,7 +35,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<RecordDto> findAll() {
-        return recordRepository.findAll()
+        return recordRepository.getAll()
                 .stream()
                 .map(RecordDto::toDto)
                 .collect(Collectors.toList());
@@ -53,6 +54,7 @@ public class RecordServiceImpl implements RecordService {
     public void save(RecordDto recordDto) {
         Record record = new Record();
         setRecord(recordDto, record);
+        record.setCreateAt(new Date());
 
 //        Optional<Patient> patient = patientRepository.findById(recordDto.getPatientDto().getId());
 //        patient.ifPresent(record::setPatient);

@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -56,6 +57,9 @@ public class Medicine {
 
     @Column(name = "note")
     private String note;
+
+    @Column(name = "create_at")
+    private Date createAt;
 
 //    @ManyToOne(fetch = FetchType.LAZY,
 //            cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})

@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +32,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientDto> findAll() {
-        return patientRepository.findAll()
+        return patientRepository.getAll()
                 .stream()
                 .map(patient -> modelMapper.map(patient, PatientDto.class))
                 .collect(Collectors.toList());
@@ -54,6 +51,7 @@ public class PatientServiceImpl implements PatientService {
     public void save(PatientDto patientDto) {
         Patient patient = new Patient();
         setPatient(patientDto, patient);
+        patient.setCreateAt(new Date());
 //        if (!ObjectUtils.isEmpty(patientDto.getRecordDto())) {
 //            patient.setRecord(modelMapper.map(patientDto.getRecordDto(), Record.class));
 //        }

@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +48,9 @@ public class Patient {
 
     @Column(name = "note")
     private String note;
+
+    @Column(name = "create_at")
+    private Date createAt;
 
 //    @OneToOne(
 //            mappedBy = "patient",

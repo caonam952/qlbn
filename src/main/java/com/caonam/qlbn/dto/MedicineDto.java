@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -27,32 +28,34 @@ public class MedicineDto {
     @NotEmpty(message = "không để trống")
     private String origin;
 
-    @NotEmpty(message = "không để trống")
+//    @NotEmpty(message = "không để trống")
     private String uni;
 
-    @NotNull(message = "không để trống")
+//    @NotNull(message = "không để trống")
     private int amount;
 
-    @NotNull(message = "không để trống")
+//    @NotNull(message = "không để trống")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Past
     private LocalDate importDate;
 
-    @NotNull(message = "không để trống")
+//    @NotNull(message = "không để trống")
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Future
     private LocalDate expDate;
 
-    @NotNull(message = "không để trống")
+//    @NotNull(message = "không để trống")
     private Double importPrice;
 
-    @NotNull(message = "không để trống")
+//    @NotNull(message = "không để trống")
     private Double price;
 
-    @NotEmpty(message = "không để trống")
+//    @NotEmpty(message = "không để trống")
     private String manual;
 
     private String note;
+
+    private Date createAt;
 
 //    private PrescriptionDto prescriptionDto;
 }

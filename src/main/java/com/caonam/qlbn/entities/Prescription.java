@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +38,9 @@ public class Prescription {
     @Column(name = "appointment_date")
     private LocalDate appointmentDate;
 
+    @Column(name = "create_at")
+    private Date createAt;
+
 //    //số lượng thuốc
 //    @Column(name = "amount")
 //    private int amount;
@@ -57,6 +61,8 @@ public class Prescription {
     @OneToMany(mappedBy = "prescription",
             cascade = CascadeType.ALL)
     private List<PrescriptionDetail> prescriptionDetails;
+
+
 
 //    @OneToMany(mappedBy = "prescription",
 //            fetch = FetchType.LAZY,

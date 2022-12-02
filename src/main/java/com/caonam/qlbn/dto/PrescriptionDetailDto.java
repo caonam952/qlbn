@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +28,8 @@ public class PrescriptionDetailDto {
     private PrescriptionDto prescriptionDto;
 
     private MedicineDto medicineDto;
+
+    private Date createAt;
 
     public static PrescriptionDetailDto toDto(PrescriptionDetail prescriptionDetail) {
         PrescriptionDetailDto dto = new ModelMapper().map(prescriptionDetail, PrescriptionDetailDto.class);
