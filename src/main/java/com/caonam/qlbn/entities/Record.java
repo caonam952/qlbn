@@ -33,23 +33,23 @@ public class Record {
 //    private String healthHistory;
 
     //bệnh sử
-    @Column(name = "medical_history")
+    @Column(name = "medical_history", length = 65555)
     private String medicalHistory;
 
     //sản phẩm đang dùng
-    @Column(name = "product_in_use")
+    @Column(name = "product_in_use", length = 65555)
     private String productInUse;
 
     //chẩn đoán
-    @Column(name = "diagnose")
+    @Column(name = "diagnose", length = 65555)
     private String diagnose;
 
     //kết quả khám
-    @Column(name = "result")
+    @Column(name = "result", length = 65555)
     private String result;
 
     //phác đồ
-    @Column(name = "regimen")
+    @Column(name = "regimen", length = 65555)
     private String regimen;
 
     @Column(name = "pre_image")
@@ -63,7 +63,14 @@ public class Record {
 
     @OneToOne(
 //            mappedBy = "record",
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+            cascade = {
+//                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+//                    CascadeType.PERSIST,
+//                    CascadeType.REFRESH
+            },
+            fetch = FetchType.LAZY
+            )
     @JoinColumn(name = "patient_id")
     private Patient patient;
 

@@ -34,7 +34,8 @@ public class PatientServiceImpl implements PatientService {
     public List<PatientDto> findAll() {
         return patientRepository.getAll()
                 .stream()
-                .map(patient -> modelMapper.map(patient, PatientDto.class))
+//                .map(patient -> modelMapper.map(patient, PatientDto.class))
+                .map(PatientDto::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -52,9 +53,9 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = new Patient();
         setPatient(patientDto, patient);
         patient.setCreateAt(new Date());
-//        if (!ObjectUtils.isEmpty(patientDto.getRecordDto())) {
-//            patient.setRecord(modelMapper.map(patientDto.getRecordDto(), Record.class));
-//        }
+        if (!ObjectUtils.isEmpty(patientDto.getRecordDto())) {
+            patient.setRecord(modelMapper.map(patientDto.getRecordDto(), Record.class));
+        }
         if (!ObjectUtils.isEmpty(patientDto.getPrescriptionDtos())) {
             patient.setPrescriptions(initPrescription(patientDto.getPrescriptionDtos(), patient));
         }
@@ -67,9 +68,9 @@ public class PatientServiceImpl implements PatientService {
 
         setPatient(patientDto, patient);
 
-//        if (!ObjectUtils.isEmpty(patientDto.getRecordDto())) {
-//            patient.setRecord(modelMapper.map(patientDto.getRecordDto(), Record.class));
-//        }
+        if (!ObjectUtils.isEmpty(patientDto.getRecordDto())) {
+            patient.setRecord(modelMapper.map(patientDto.getRecordDto(), Record.class));
+        }
         if (!ObjectUtils.isEmpty(patientDto.getPrescriptionDtos())) {
             patient.setPrescriptions(initPrescription(patientDto.getPrescriptionDtos(), patient));
         }
@@ -102,18 +103,18 @@ public class PatientServiceImpl implements PatientService {
         return null;
     }
 
-    public List<Medicine> initMedicine(List<MedicineDto> medicineDtos) {
-        if (!medicineDtos.isEmpty()) {
-            List<Medicine> medicines = new ArrayList<>();
-            for (MedicineDto medicineDto : medicineDtos) {
-                Medicine medicine = new Medicine();
-                MedicineServiceImpl.setMedicine(medicineDto, medicine);
-                medicines.add(medicine);
-            }
-        }
-        return null;
-
-    }
+//    public List<Medicine> initMedicine(List<MedicineDto> medicineDtos) {
+//        if (!medicineDtos.isEmpty()) {
+//            List<Medicine> medicines = new ArrayList<>();
+//            for (MedicineDto medicineDto : medicineDtos) {
+//                Medicine medicine = new Medicine();
+//                MedicineServiceImpl.setMedicine(medicineDto, medicine);
+//                medicines.add(medicine);
+//            }
+//        }
+//        return null;
+//
+//    }
 
 //    private void setMedicine(MedicineDto medicineDto, Medicine medicine) {
 //        medicine.setName(medicineDto.getName());

@@ -44,22 +44,40 @@ public class RecordController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//    @PutMapping("/records/{recordId}")
+//    public ResponseEntity<?> updateRecord(@RequestBody @Valid RecordDto recordDto, @PathVariable UUID recordId) {
+//        Optional<RecordDto> recordDtoOptional = recordService.findById(recordId);
+//        return recordDtoOptional.map(patientDTO -> {
+//            recordService.update(recordDto, recordId);
+//            return new ResponseEntity<>(patientDTO, HttpStatus.OK);
+//        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    }
     @PutMapping("/records/{recordId}")
     public ResponseEntity<?> updateRecord(@RequestBody @Valid RecordDto recordDto, @PathVariable UUID recordId) {
         Optional<RecordDto> recordDtoOptional = recordService.findById(recordId);
-        return recordDtoOptional.map(patientDTO -> {
+        return recordDtoOptional.map(recordDTO -> {
             recordService.update(recordDto, recordId);
-            return new ResponseEntity<>(patientDTO, HttpStatus.OK);
+            return new ResponseEntity<>(recordDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/records/{recordId}")
-    public ResponseEntity<RecordDto> deletePatient(@PathVariable UUID recordId) {
+    public ResponseEntity<RecordDto> deleteRecord(@PathVariable UUID recordId) {
         // Lấy thử đối tượng có id đó ra xem tồn tại chưa để xóa, ko thì trả về status not found
         Optional<RecordDto> recordDtoOptional = recordService.findById(recordId);
-        return recordDtoOptional.map(patientDTO -> {
+        return recordDtoOptional.map(recordDTO -> {
             recordService.deleteById(recordId);
-            return new ResponseEntity<>(patientDTO, HttpStatus.OK);
+            return new ResponseEntity<>(recordDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @GetMapping("/records/patientId={patientId}")
+    public ResponseEntity<RecordDto> getRecordByPatientId(@PathVariable UUID patientId){
+        Optional<RecordDto> recordByPatientId = recordService.getRecordByPatientId(patientId);
+//        return new ResponseEntity<>(recordByPatientId, HttpStatus.OK);
+        return recordByPatientId.map(recordDto -> {
+            return new ResponseEntity<>(recordDto, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }

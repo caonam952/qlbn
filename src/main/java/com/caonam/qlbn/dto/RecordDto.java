@@ -18,18 +18,18 @@ import java.util.UUID;
 public class RecordDto {
     private UUID id;
 
-    @NotEmpty(message = "không để trống")
+//    @NotEmpty(message = "không để trống")
     private String medicalHistory;
 
     private String productInUse;
 
-    @NotEmpty(message = "không để trống")
+//    @NotEmpty(message = "không để trống")
     private String diagnose;
 
-    @NotEmpty(message = "không để trống")
+//    @NotEmpty(message = "không để trống")
     private String result;
 
-    @NotEmpty(message = "không để trống")
+//    @NotEmpty(message = "không để trống")
     private String regimen;
 
     private String preImage;

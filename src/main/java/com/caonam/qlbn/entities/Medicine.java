@@ -55,7 +55,7 @@ public class Medicine {
     @Column(name = "manual")
     private String manual;
 
-    @Column(name = "note")
+    @Column(name = "note", length = 65555)
     private String note;
 
     @Column(name = "create_at")

@@ -46,17 +46,18 @@ public class Patient {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "note")
+    @Column(name = "note", length = 65555)
     private String note;
 
     @Column(name = "create_at")
     private Date createAt;
 
-//    @OneToOne(
-//            mappedBy = "patient",
-//            cascade = CascadeType.ALL)
-////    @JoinColumn(name = "record_id")
-//    private Record record;
+    @OneToOne(
+            mappedBy = "patient",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+//    @JoinColumn(name = "record_id")
+    private Record record;
 
     @OneToMany(mappedBy = "patient",
             cascade = CascadeType.ALL)

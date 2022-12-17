@@ -28,6 +28,7 @@ public class PrescriptionDto {
     private UUID id;
 
     @NotNull(message = "không để trống")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate prescriptionDate;
 
     @NotNull(message = "không để trống")
@@ -35,7 +36,7 @@ public class PrescriptionDto {
     @Future
     private LocalDate appointmentDate;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "không để trống")
     private PatientDto patientDto;
 
     @Column(name = "create_at")

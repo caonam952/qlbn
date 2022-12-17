@@ -1,18 +1,19 @@
 package com.caonam.qlbn.dto;
 
+import com.caonam.qlbn.entities.Patient;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.modelmapper.ModelMapper;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,11 +43,24 @@ public class PatientDto {
     @Email(message = "nhập đúng định dạng email")
     private String email;
 
-    @Column(name = "note")
     private String note;
 
     private Date createAt;
-//    private RecordDto recordDto;
+
+    private RecordDto recordDto;
 
     private List<PrescriptionDto> prescriptionDtos;
+
+    public static PatientDto toDto(Patient patient) {
+        PatientDto dto = new ModelMapper().map(patient, PatientDto.class);
+        if (patient.getRecord() != null) {
+            dto.setRecordDto(new ModelMapper().map(patient.getRecord(), RecordDto.class));
+        }
+        dto.setPrescriptionDtos(patient.getPrescriptions().stream().map(
+                prescription -> {
+                    return new ModelMapper().map(prescription, PrescriptionDto.class);
+                }
+        ).collect(Collectors.toList()));
+        return dto;
+    }
 }

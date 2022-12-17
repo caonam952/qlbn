@@ -58,6 +58,14 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
+    public List<PrescriptionDto> findAllByPatientId(UUID patientId) {
+        return prescriptionRepository.findAllByPatient_Id(patientId)
+                .stream()
+                .map(PrescriptionDto::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void save(PrescriptionDto prescriptionDto) {
         Prescription prescription = new Prescription();
 

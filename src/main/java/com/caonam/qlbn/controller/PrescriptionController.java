@@ -37,6 +37,15 @@ public class PrescriptionController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/prescriptions/patientId={patientId}")
+    public ResponseEntity<List<PrescriptionDto>> findAllPrescriptionByPatientId(@PathVariable UUID patientId) {
+//        Optional<PrescriptionDto> prescriptionDtoOptional = prescriptionService.findAllByPatientId(patientId);
+//        return prescriptionDtoOptional.map(prescriptionDto -> {
+//            return new ResponseEntity<>(prescriptionDto, HttpStatus.OK);
+//        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return new ResponseEntity<>(prescriptionService.findAllByPatientId(patientId), HttpStatus.OK);
+    }
+
     @PostMapping("/prescriptions")
     public ResponseEntity<?> savePrescription(@RequestBody @Valid PrescriptionDto prescriptionDto) {
         prescriptionService.save(prescriptionDto);

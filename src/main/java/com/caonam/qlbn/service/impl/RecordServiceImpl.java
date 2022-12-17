@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +30,9 @@ public class RecordServiceImpl implements RecordService {
     private static RecordRepository recordRepository;
 
     @Autowired
-    public RecordServiceImpl(RecordRepository theRecordRepository,PatientRepository thePatientRepository) {
+    public RecordServiceImpl(RecordRepository theRecordRepository
+            ,PatientRepository thePatientRepository
+    ) {
         recordRepository = theRecordRepository;
         patientRepository = thePatientRepository;
     }
@@ -37,14 +41,17 @@ public class RecordServiceImpl implements RecordService {
     public List<RecordDto> findAll() {
         return recordRepository.getAll()
                 .stream()
+//                .map(record -> modelMapper.map(record, RecordDto.class))
                 .map(RecordDto::toDto)
                 .collect(Collectors.toList());
+
     }
 
     @Override
     public Optional<RecordDto> findById(UUID id) {
         Optional<Record> result = recordRepository.findById(id);
 
+//        Optional<RecordDto> tempRecordDto = result.map(record -> modelMapper.map(record, RecordDto.class));
         Optional<RecordDto> tempRecordDto = result.map(record -> modelMapper.map(record, RecordDto.class));
 
         return tempRecordDto;
@@ -56,16 +63,16 @@ public class RecordServiceImpl implements RecordService {
         setRecord(recordDto, record);
         record.setCreateAt(new Date());
 
-//        Optional<Patient> patient = patientRepository.findById(recordDto.getPatientDto().getId());
-//        patient.ifPresent(record::setPatient);
+        Optional<Patient> patient = patientRepository.findById(recordDto.getPatientDto().getId());
+        patient.ifPresent(record::setPatient);
 
-        if (!ObjectUtils.isEmpty(recordDto.getPatientDto())) {
-            patientRepository.findById(recordDto.getPatientDto().getId())
-                    .map(patient -> {
-                                record.setPatient(patient);
-                                return record;
-                            });
-        }
+//        if (!ObjectUtils.isEmpty(recordDto.getPatientDto())) {
+//            patientRepository.findById(recordDto.getPatientDto().getId())
+//                    .map(patient -> {
+//                                record.setPatient(patient);
+//                                return record;
+//                            });
+//        }
 
 //        record.setPatient(modelMapper.map(recordDto.getPatientDto().getId(), Patient.class));
 
@@ -78,18 +85,19 @@ public class RecordServiceImpl implements RecordService {
         Record record = recordRepository.findById(id).orElse(new Record());
         setRecord(recordDto, record);
 
-        if (!ObjectUtils.isEmpty(recordDto.getPatientDto())) {
-            patientRepository.findById(recordDto.getPatientDto().getId())
-                    .map(patient -> {
-                        record.setPatient(patient);
-                        return record;
-                    });
-        }
+//        if (!ObjectUtils.isEmpty(recordDto.getPatientDto())) {
+//            patientRepository.findById(recordDto.getPatientDto().getId())
+//                    .map(patient -> {
+//                        record.setPatient(patient);
+//                        return record;
+//                    });
+//        }
         modelMapper.map(recordRepository.save(record), RecordDto.class);
     }
 
 
     private void setRecord(RecordDto recordDto, Record record) {
+
         record.setMedicalHistory(recordDto.getMedicalHistory());
         record.setProductInUse(recordDto.getProductInUse());
         record.setDiagnose(recordDto.getDiagnose());
@@ -102,5 +110,15 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public void deleteById(UUID id) {
         recordRepository.deleteById(id);
+    }
+
+
+
+    @Override
+    public Optional<RecordDto> getRecordByPatientId(UUID patientId) {
+        Optional<Record> result = recordRepository.getRecordByPatient_Id(patientId);
+        Optional<RecordDto> tempRecordDto = result.map(RecordDto::toDto);
+//        return modelMapper.map(recordRepository.getRecordByPatient_Id(patientId), RecordDto.class);
+        return tempRecordDto;
     }
 }

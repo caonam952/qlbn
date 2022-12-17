@@ -62,8 +62,6 @@ public class Prescription {
             cascade = CascadeType.ALL)
     private List<PrescriptionDetail> prescriptionDetails;
 
-
-
 //    @OneToMany(mappedBy = "prescription",
 //            fetch = FetchType.LAZY,
 //            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
