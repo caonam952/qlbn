@@ -36,6 +36,8 @@ public class PrescriptionDto {
     @Future
     private LocalDate appointmentDate;
 
+    private String note;
+
     @NotNull(message = "không để trống")
     private PatientDto patientDto;
 

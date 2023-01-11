@@ -48,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void save(EmployeeDto employeeDto) {
         Employee employee = new Employee();
-        setEmployee(employeeDto,employee);
+        setEmployee(employeeDto, employee);
         employee.setCreateAt(new Date());
         modelMapper.map(employeeRepository.save(employee), EmployeeDto.class);
     }
@@ -66,12 +66,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         modelMapper.map(employeeRepository.save(employee), EmployeeDto.class);
     }
 
-    private void setEmployee(EmployeeDto employeeDto, Employee employee){
+    private void setEmployee(EmployeeDto employeeDto, Employee employee) {
         employee.setName(employeeDto.getName());
         employee.setPosition(employeeDto.getPosition());
         employee.setPhone(employeeDto.getPhone());
         employee.setEmail(employeeDto.getEmail());
-
+        employee.setConditionStatus(employeeDto.getConditionStatus());
     }
 }
 

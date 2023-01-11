@@ -27,10 +27,12 @@ public class PrescriptionDetailServiceImpl implements PrescriptionDetailService 
 
     private static PrescriptionRepository prescriptionRepository;
 
-    private static MedicineRepository medicineRepository;
+//    private static MedicineRepository medicineRepository;
     @Autowired
-    public PrescriptionDetailServiceImpl(PrescriptionDetailRepository thePrescriptionDetailRepository, PrescriptionRepository thePrescriptionRepository, MedicineRepository theMedicineRepository) {
-        medicineRepository = theMedicineRepository;
+    public PrescriptionDetailServiceImpl(PrescriptionDetailRepository thePrescriptionDetailRepository, PrescriptionRepository thePrescriptionRepository
+//            , MedicineRepository theMedicineRepository
+    ) {
+//        medicineRepository = theMedicineRepository;
         prescriptionDetailRepository = thePrescriptionDetailRepository;
         prescriptionRepository = thePrescriptionRepository;
     }
@@ -53,10 +55,22 @@ public class PrescriptionDetailServiceImpl implements PrescriptionDetailService 
     }
 
     @Override
+    public List<PrescriptionDetailDto> findAllByPrescriptionId(UUID prescriptionId) {
+        return  prescriptionDetailRepository.findAllByPrescription_Id(prescriptionId)
+                .stream()
+                .map(PrescriptionDetailDto::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void save(PrescriptionDetailDto prescriptionDetailDto) {
         PrescriptionDetail prescriptionDetail = new PrescriptionDetail();
         setPrescriptionDetail(prescriptionDetailDto, prescriptionDetail);
         prescriptionDetail.setCreateAt(new Date());
+
+        Optional<Prescription> prescription = prescriptionRepository.findById(prescriptionDetailDto.getPrescriptionDto().getId());
+        prescription.ifPresent(prescriptionDetail::setPrescription);
+
         modelMapper.map(prescriptionDetailRepository.save(prescriptionDetail), PrescriptionDetailDto.class);
 
     }
@@ -77,24 +91,27 @@ public class PrescriptionDetailServiceImpl implements PrescriptionDetailService 
     }
 
     private void setPrescriptionDetail(PrescriptionDetailDto prescriptionDetailDto, PrescriptionDetail prescriptionDetail) {
+        prescriptionDetail.setMedicine(prescriptionDetailDto.getMedicine());
         prescriptionDetail.setAmount(prescriptionDetailDto.getAmount());
         prescriptionDetail.setDosage(prescriptionDetailDto.getDosage());
 
-        if (!ObjectUtils.isEmpty(prescriptionDetailDto.getPrescriptionDto())) {
-            prescriptionRepository.findById(prescriptionDetailDto.getPrescriptionDto().getId())
-                    .map(prescription -> {
-                        prescriptionDetail.setPrescription(prescription);
-                        return prescriptionDetail;
-                    });
-        }
 
-        if (!ObjectUtils.isEmpty(prescriptionDetailDto.getMedicineDto())) {
-            medicineRepository.findById(prescriptionDetailDto.getMedicineDto().getId())
-                    .map(medicine -> {
-                        prescriptionDetail.setMedicine(medicine);
-                        return prescriptionDetail;
-                    });
-        }
+
+//        if (!ObjectUtils.isEmpty(prescriptionDetailDto.getPrescriptionDto())) {
+//            prescriptionRepository.findById(prescriptionDetailDto.getPrescriptionDto().getId())
+//                    .map(prescription -> {
+//                        prescriptionDetail.setPrescription(prescription);
+//                        return prescriptionDetail;
+//                    });
+//        }
+
+//        if (!ObjectUtils.isEmpty(prescriptionDetailDto.getMedicineDto())) {
+//            medicineRepository.findById(prescriptionDetailDto.getMedicineDto().getId())
+//                    .map(medicine -> {
+//                        prescriptionDetail.setMedicine(medicine);
+//                        return prescriptionDetail;
+//                    });
+//        }
 
 //        prescriptionDetail.setPrescription(modelMapper.map(prescriptionDetailDto.getPrescriptionDto(), Prescription.class));
 //        prescriptionDetail.setMedicine(modelMapper.map(prescriptionDetailDto.getMedicineDto(), Medicine.class));

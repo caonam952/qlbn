@@ -40,6 +40,9 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "condition_status")
+    private String conditionStatus;
+
     @Column(name = "create_at")
     private Date createAt;
 

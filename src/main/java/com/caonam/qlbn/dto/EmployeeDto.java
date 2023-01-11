@@ -31,6 +31,9 @@ public class EmployeeDto {
     @Email(message = "nhập đúng định dạng email")
     private String email;
 
+    @NotEmpty(message = "không để trống")
+    private String conditionStatus;
+
     private Date createAt;
 
 //    private PrescriptionDto prescriptionDto;

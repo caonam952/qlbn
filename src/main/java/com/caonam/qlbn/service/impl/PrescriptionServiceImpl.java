@@ -52,7 +52,8 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     public Optional<PrescriptionDto> findById(UUID id) {
         Optional<Prescription> result = prescriptionRepository.findById(id);
 
-        Optional<PrescriptionDto> temPrescriptionDto = result.map(prescription -> modelMapper.map(prescription, PrescriptionDto.class));
+//        Optional<PrescriptionDto> temPrescriptionDto = result.map(prescription -> modelMapper.map(prescription, PrescriptionDto.class));
+        Optional<PrescriptionDto> temPrescriptionDto = result.map(PrescriptionDto::toDto);
 
         return temPrescriptionDto;
     }
@@ -99,6 +100,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     private void setPrescription(PrescriptionDto prescriptionDto, Prescription prescription) {
         prescription.setPrescriptionDate(prescriptionDto.getPrescriptionDate());
         prescription.setAppointmentDate(prescriptionDto.getAppointmentDate());
+        prescription.setNote(prescriptionDto.getNote());
 
         if (!ObjectUtils.isEmpty(prescriptionDto.getEmployeeDto())) {
             employeeRepository.findById(prescriptionDto.getEmployeeDto().getId())

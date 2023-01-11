@@ -30,12 +30,15 @@ public class PrescriptionDetail {
     @Type(type = "uuid-char")
     private UUID id;
 
+    @Column(name = "medicine")
+    private String medicine;
+
     //số lượng thuốc
     @Column(name = "amount")
     private int amount;
 
     //liều dùng
-    @Column(name = "dosage")
+    @Column(name = "dosage", length = 65555)
     private String dosage;
 
     @Column(name = "create_at")
@@ -45,12 +48,12 @@ public class PrescriptionDetail {
     @JoinColumn(name = "prescription_id")
     private Prescription prescription;
 
-    @OneToOne(
-//            mappedBy = "prescriptionDetail",
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "medicine_id")
-    private Medicine medicine;
+//    @OneToOne(
+////            mappedBy = "prescriptionDetail",
+//            fetch = FetchType.LAZY,
+//            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//    @JoinColumn(name = "medicine_id")
+//    private Medicine medicine;
 
 
 

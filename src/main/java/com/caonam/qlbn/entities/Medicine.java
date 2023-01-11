@@ -52,7 +52,7 @@ public class Medicine {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "manual")
+    @Column(name = "manual", length = 65555)
     private String manual;
 
     @Column(name = "note", length = 65555)

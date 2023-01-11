@@ -89,7 +89,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers(DELETE,"/api/user/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers("/api/employees/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/api/employees/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MODERATOR")
                 .antMatchers("/api/medicines/**").hasAnyAuthority("ROLE_MODERATOR")
                 .antMatchers("/api/patients/**").hasAnyAuthority("ROLE_MODERATOR")
                 .antMatchers("/api/prescriptions/**").hasAnyAuthority("ROLE_MODERATOR")

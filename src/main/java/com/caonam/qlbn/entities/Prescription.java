@@ -38,6 +38,9 @@ public class Prescription {
     @Column(name = "appointment_date")
     private LocalDate appointmentDate;
 
+    @Column(name = "note", length = 65555)
+    private String note;
+
     @Column(name = "create_at")
     private Date createAt;
 
