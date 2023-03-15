@@ -1,6 +1,7 @@
 package com.caonam.qlbn.controller;
 
 import com.caonam.qlbn.dto.PrescriptionDto;
+import com.caonam.qlbn.entities.ConvertStatistic;
 import com.caonam.qlbn.service.PrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,4 +71,26 @@ public class PrescriptionController {
             return new ResponseEntity<>(prescriptionDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @GetMapping("/prescriptions/countByAttendingDoctor")
+    public List<ConvertStatistic> countPrescriptionByAttendingDoctor(){
+        return prescriptionService.countPrescriptionByAttendingDoctor();
+    }
+
+    @GetMapping("/prescriptions/countByPatient")
+    public List<ConvertStatistic> countPrescriptionByPatient(){
+        return prescriptionService.countPrescriptionByPatient();
+    }
+
+    @GetMapping("/prescriptions/countByMonth")
+    public List<ConvertStatistic> countPrescriptionByMonth(){
+        return prescriptionService.countPrescriptionByMonth();
+    }
+
+    @GetMapping("/prescriptions/countPrescription")
+    public Integer countPrescription() {
+        return prescriptionService.countPrescription();
+    }
+
+
 }

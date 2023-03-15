@@ -63,4 +63,9 @@ public class PatientControler {
             return new ResponseEntity<>(patientDTO, HttpStatus.OK);
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @GetMapping("/patients/countPatient")
+    public Integer countPatient() {
+        return patientService.countPatient();
+    }
 }

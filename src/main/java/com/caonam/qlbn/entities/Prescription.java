@@ -44,6 +44,9 @@ public class Prescription {
     @Column(name = "create_at")
     private Date createAt;
 
+    @Column(name = "attending_doctor")
+    private String attendingDoctor;
+
 //    //số lượng thuốc
 //    @Column(name = "amount")
 //    private int amount;
@@ -56,10 +59,10 @@ public class Prescription {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+//    @ManyToOne(fetch = FetchType.LAZY,
+//            cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+//    @JoinColumn(name = "employee_id")
+//    private Employee employee;
 
     @OneToMany(mappedBy = "prescription",
             cascade = CascadeType.ALL)

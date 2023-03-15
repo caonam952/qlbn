@@ -13,4 +13,7 @@ import java.util.UUID;
 public interface PatientRepository extends JpaRepository<Patient, UUID> {
     @Query(value = "select e from Patient e order by e.createAt DESC")
     List<Patient> getAll();
+
+    @Query(value = "select count(e.id) from Patient e ")
+    Integer countPatient();
 }

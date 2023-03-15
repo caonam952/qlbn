@@ -1,10 +1,8 @@
 package com.caonam.qlbn.service.impl;
 
 import com.caonam.qlbn.dao.PatientRepository;
-import com.caonam.qlbn.dto.MedicineDto;
 import com.caonam.qlbn.dto.PatientDto;
 import com.caonam.qlbn.dto.PrescriptionDto;
-import com.caonam.qlbn.entities.Medicine;
 import com.caonam.qlbn.entities.Patient;
 import com.caonam.qlbn.entities.Prescription;
 import com.caonam.qlbn.entities.Record;
@@ -76,7 +74,6 @@ public class PatientServiceImpl implements PatientService {
         }
         modelMapper.map(patientRepository.save(patient), PatientDto.class);
 
-
     }
 
     private void setPatient(PatientDto patientDto, Patient patient) {
@@ -132,4 +129,11 @@ public class PatientServiceImpl implements PatientService {
     public void deleteById(UUID id) {
         patientRepository.deleteById(id);
     }
+
+    @Override
+    public Integer countPatient() {
+        return patientRepository.countPatient();
+    }
+
+
 }

@@ -6,6 +6,7 @@ import com.caonam.qlbn.dao.PrescriptionDetailRepository;
 import com.caonam.qlbn.dao.PrescriptionRepository;
 import com.caonam.qlbn.dto.PrescriptionDetailDto;
 import com.caonam.qlbn.dto.PrescriptionDto;
+import com.caonam.qlbn.entities.ConvertStatistic;
 import com.caonam.qlbn.entities.Patient;
 import com.caonam.qlbn.entities.Prescription;
 import com.caonam.qlbn.entities.PrescriptionDetail;
@@ -101,14 +102,15 @@ public class PrescriptionServiceImpl implements PrescriptionService {
         prescription.setPrescriptionDate(prescriptionDto.getPrescriptionDate());
         prescription.setAppointmentDate(prescriptionDto.getAppointmentDate());
         prescription.setNote(prescriptionDto.getNote());
+        prescription.setAttendingDoctor(prescriptionDto.getAttendingDoctor());
 
-        if (!ObjectUtils.isEmpty(prescriptionDto.getEmployeeDto())) {
-            employeeRepository.findById(prescriptionDto.getEmployeeDto().getId())
-                    .map(employee -> {
-                        prescription.setEmployee(employee);
-                        return prescription;
-                    });
-        }
+//        if (!ObjectUtils.isEmpty(prescriptionDto.getEmployeeDto())) {
+//            employeeRepository.findById(prescriptionDto.getEmployeeDto().getId())
+//                    .map(employee -> {
+//                        prescription.setEmployee(employee);
+//                        return prescription;
+//                    });
+//        }
 
         if (!ObjectUtils.isEmpty(prescriptionDto.getPatientDto())) {
             patientRepository.findById(prescriptionDto.getPatientDto().getId())
@@ -142,5 +144,55 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     @Override
     public void deleteById(UUID id) {
         prescriptionRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ConvertStatistic> countPrescriptionByAttendingDoctor(){
+        List<Object[]> results = prescriptionRepository.countPrescriptionByAttendingDoctor();
+        List<ConvertStatistic> reports = new ArrayList<>();
+
+        for (Object[] result : results) {
+            ConvertStatistic report = new ConvertStatistic();
+            report.setName((String) result[0]);
+            Integer value = ((Number) result[1]).intValue();
+            report.setValue(value);
+            reports.add(report);
+        }
+        return reports;
+    }
+
+    @Override
+    public List<ConvertStatistic> countPrescriptionByPatient() {
+        List<Object[]> results = prescriptionRepository.countPrescriptionByPatient();
+        List<ConvertStatistic> reports = new ArrayList<>();
+
+        for (Object[] result : results) {
+            ConvertStatistic report = new ConvertStatistic();
+            report.setName((String) result[0]);
+            Integer value = ((Number) result[1]).intValue();
+            report.setValue(value);
+            reports.add(report);
+        }
+        return reports;
+    }
+
+    @Override
+    public List<ConvertStatistic> countPrescriptionByMonth() {
+        List<Object[]> results = prescriptionRepository.countPrescriptionByMonth();
+        List<ConvertStatistic> reports = new ArrayList<>();
+
+        for (Object[] result : results) {
+            ConvertStatistic report = new ConvertStatistic();
+            report.setName((String) result[0]);
+            Integer value = ((Number) result[1]).intValue();
+            report.setValue(value);
+            reports.add(report);
+        }
+        return reports;
+    }
+
+    @Override
+    public Integer countPrescription() {
+        return prescriptionRepository.countPrescription();
     }
 }

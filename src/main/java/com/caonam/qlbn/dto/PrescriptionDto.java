@@ -41,17 +41,18 @@ public class PrescriptionDto {
     @NotNull(message = "không để trống")
     private PatientDto patientDto;
 
-    @Column(name = "create_at")
     private Date createAt;
 
-    private EmployeeDto employeeDto;
+    private String attendingDoctor;
+
+//    private EmployeeDto employeeDto;
 
     private List<PrescriptionDetailDto> prescriptionDetailDtos;
 
     public static PrescriptionDto toDto(Prescription prescription) {
         PrescriptionDto dto = new ModelMapper().map(prescription, PrescriptionDto.class);
         dto.setPatientDto(new ModelMapper().map(prescription.getPatient(), PatientDto.class));
-        dto.setEmployeeDto(new ModelMapper().map(prescription.getEmployee(), EmployeeDto.class));
+//        dto.setEmployeeDto(new ModelMapper().map(prescription.getEmployee(), EmployeeDto.class));
         dto.setPrescriptionDetailDtos(prescription.getPrescriptionDetails().stream().map(
                 prescriptionDetail -> {
                     return new ModelMapper().map(prescriptionDetail, PrescriptionDetailDto.class);
